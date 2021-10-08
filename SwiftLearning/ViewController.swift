@@ -23,7 +23,6 @@ class ViewController: UIViewController {
     
     deinit {
         print("Deinit")
-        print("")
     }
     
     // MARK: - Lifecycle
