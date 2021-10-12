@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     // MARK: - Properties
     var array = [String]()
     
+    
     // MARK: - Subviews
     var inputTextField = UITextField()
     var outputLabel = UILabel()
@@ -23,7 +24,7 @@ class ViewController: UIViewController {
     
     deinit {
         print("Deinit")
-        }
+    }
     
     // MARK: - Lifecycle
     
@@ -96,7 +97,7 @@ class ViewController: UIViewController {
         outputLabel.translatesAutoresizingMaskIntoConstraints = false
         outputLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20).isActive = true
         outputLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20).isActive = true
-        outputLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -40).isActive = true
+        outputLabel.topAnchor.constraint(equalTo: inputTextField.bottomAnchor, constant: 5).isActive = true
         outputLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
         
     }
@@ -104,13 +105,19 @@ class ViewController: UIViewController {
     
     // MARK: - Handlers
     
-    @objc private func applyButtonTapped(_ sender: UIButton) {
+    @objc private func applyButtonTapped() {
+        
+        array.append(inputTextField.text ?? "empty")
+        inputTextField.text = ""
+        
         /* написать функцию, которая по нажатию на кнопку "Apply":
          - добавляет текст из поля ввода в массив
          - выводит в лейбл все элементы массива
          - очищает поле ввода
          */
-        outputLabel.text = "Denis ne ssi"
+            
+            outputLabel.text = "\(array)"
+        
     }
     
     @objc private func cancelButtonTapped() {
