@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     deinit {
         print("Deinit")
-    }
+        }
     
     // MARK: - Lifecycle
     
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
     
     // MARK: - Handlers
     
-    @objc private func applyButtonTapped() {
+    @objc private func applyButtonTapped(_ sender: UIButton) {
         /* написать функцию, которая по нажатию на кнопку "Apply":
          - добавляет текст из поля ввода в массив
          - выводит в лейбл все элементы массива
