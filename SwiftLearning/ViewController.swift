@@ -107,16 +107,25 @@ class ViewController: UIViewController {
     
     @objc private func applyButtonTapped() {
         
+        /* Задача 1
         array.append(inputTextField.text ?? "empty")
         inputTextField.text = ""
+        outputLabel.text = "\(array)"
+        */
+    
+        /* Задача 2
+        array.insert(inputTextField.text!, at:0)
+        inputTextField.text = ""
+        outputLabel.text = "\(array)"
+        */
         
-        /* написать функцию, которая по нажатию на кнопку "Apply":
-         - добавляет текст из поля ввода в массив
-         - выводит в лейбл все элементы массива
-         - очищает поле ввода
+        /* Задача 3
+        array.append(inputTextField.text ?? "empty")
+        inputTextField.text = ""
+        outputLabel.text = (array.randomElement()!)
          */
-            
-            outputLabel.text = "\(array)"
+        
+        inputTextField.keyboardType
         
     }
     
