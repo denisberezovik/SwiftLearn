@@ -12,13 +12,13 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     var array = [String]()
-    
+    var arrayInt: [Int] = [1,2,3,4,5,6,7,8,9,10]
     
     // MARK: - Subviews
     var inputTextField = UITextField()
     var outputLabel = UILabel()
     var applyButton = UIButton()
-    var cancelButton = UIButton()
+    var removeButton = UIButton()
     
     // MARK: - Initializers
     
@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     // MARK: - Lifecycle
     
     public override func viewDidLoad() {
+        
         super.viewDidLoad()
         setup()
     }
@@ -39,17 +40,22 @@ class ViewController: UIViewController {
     
     // MARK: -  Methods
     
+    func setupTextField(textField: UITextField) {
+        textField.delegate = self
+    }
+    
     private func setup() {
         configureSubviews()
         buildHierarchy()
         layoutSubviews()
+        setupTextField(textField: inputTextField)
     }
     
     private func buildHierarchy() {
         view.addSubview(inputTextField)
         view.addSubview(outputLabel)
         view.addSubview(applyButton)
-        view.addSubview(cancelButton)
+        view.addSubview(removeButton)
     }
     
     private func configureSubviews() {
@@ -58,12 +64,13 @@ class ViewController: UIViewController {
         applyButton.setTitle("Apply".uppercased(), for: .normal)
         applyButton.addTarget(self, action: #selector(applyButtonTapped), for: .touchUpInside)
         
-        cancelButton.layer.cornerRadius = 10
-        cancelButton.backgroundColor = .red
-        cancelButton.setTitle("Cancel".uppercased(), for: .normal)
-        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        
         inputTextField.borderStyle = .roundedRect
+        inputTextField.backgroundColor = .yellow
+        
+        removeButton.layer.cornerRadius = 10
+        removeButton.backgroundColor = .red
+        removeButton.setTitle("Remove".uppercased(), for: .normal)
+        removeButton.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         
         outputLabel.backgroundColor = .gray
         outputLabel.textColor = .white
@@ -88,17 +95,17 @@ class ViewController: UIViewController {
         applyButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
         applyButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.widthAnchor.constraint(equalTo: inputTextField.widthAnchor).isActive = true
-        cancelButton.centerYAnchor.constraint(equalTo: applyButton.centerYAnchor, constant: 40).isActive = true
-        cancelButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
-        cancelButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        removeButton.translatesAutoresizingMaskIntoConstraints = false
+        removeButton.widthAnchor.constraint(equalTo: inputTextField.widthAnchor).isActive = true
+        removeButton.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor, constant: 50).isActive = true
+        removeButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
+        removeButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         outputLabel.translatesAutoresizingMaskIntoConstraints = false
         outputLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20).isActive = true
         outputLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20).isActive = true
-        outputLabel.topAnchor.constraint(equalTo: inputTextField.bottomAnchor, constant: 5).isActive = true
-        outputLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
+        outputLabel.topAnchor.constraint(equalTo: inputTextField.bottomAnchor, constant: 330).isActive = true
+        outputLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 60).isActive = true
         
     }
     
@@ -125,19 +132,35 @@ class ViewController: UIViewController {
         outputLabel.text = (array.randomElement()!)
          */
         
-        inputTextField.keyboardType
+        /* Задача 4
+         if let number = inputTextField.text {
+            arrayInt.append(Int(number) ?? 0)
+        }
+        inputTextField.text = ""
+        outputLabel.text = "\(arrayInt)"
+         */
         
     }
     
-    @objc private func cancelButtonTapped() {
-        /* написать функцию, которая по нажатию на кнопку "Apply":
-         - добавляет текст из поля ввода в массив
-         - выводит в лейбл все элементы массива
-         - очищает поле ввода
-         */
-        outputLabel.text = ""
+    
+    @objc private func removeButtonTapped() {
+        
+        
+        
+        
+        outputLabel.text = "\(arrayInt)"
     }
     
 }
 
+extension ViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        let allowedCharacters = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: string)
+        return allowedCharacters.isSuperset(of: characterSet)
+    }
+    
+}
 
