@@ -66,9 +66,11 @@ class ViewController: UIViewController {
         
         inputTextField.borderStyle = .roundedRect
         inputTextField.backgroundColor = .yellow
+        inputTextField.keyboardType = .numberPad
         
         removeButton.layer.cornerRadius = 10
         removeButton.backgroundColor = .red
+        removeButton.setTitleColor(.black, for: .normal)
         removeButton.setTitle("Remove".uppercased(), for: .normal)
         removeButton.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         
@@ -104,7 +106,7 @@ class ViewController: UIViewController {
         outputLabel.translatesAutoresizingMaskIntoConstraints = false
         outputLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20).isActive = true
         outputLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20).isActive = true
-        outputLabel.topAnchor.constraint(equalTo: inputTextField.bottomAnchor, constant: 330).isActive = true
+        outputLabel.topAnchor.constraint(equalTo: inputTextField.bottomAnchor, constant: 40).isActive = true
         outputLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 60).isActive = true
         
     }
@@ -113,6 +115,14 @@ class ViewController: UIViewController {
     // MARK: - Handlers
     
     @objc private func applyButtonTapped() {
+        
+        arrayInt = [121,232,24231,13412,141324,1234231,13,4,6,7,8,4564,455]
+        
+        if arrayInt.count > 1 {
+            
+            removeButton.isHidden = false
+            
+        }
         
         /* Задача 1
         array.append(inputTextField.text ?? "empty")
@@ -145,7 +155,22 @@ class ViewController: UIViewController {
     
     @objc private func removeButtonTapped() {
         
+        let element = Int(inputTextField.text ?? "0")
+        let lastElement = arrayInt.last
         
+        if element ?? 0 > lastElement ?? 0 {
+            arrayInt.removeLast()
+        } else {
+            arrayInt.removeFirst()
+        }
+        
+        if arrayInt.count <= 1 {
+            
+            removeButton.isHidden = true
+            
+        }
+        
+        //button.isHidden = true
         
         
         outputLabel.text = "\(arrayInt)"
@@ -160,6 +185,10 @@ extension ViewController: UITextFieldDelegate {
         let allowedCharacters = CharacterSet.decimalDigits
         let characterSet = CharacterSet(charactersIn: string)
         return allowedCharacters.isSuperset(of: characterSet)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
     }
     
 }
