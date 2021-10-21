@@ -13,6 +13,11 @@ class ViewController: UIViewController {
     // MARK: - Properties
     var array = [String]()
     var arrayInt = [Int]()
+    var nameAges : [String: Int] = ["Greg" : 25,
+                                    "Max"  : 32,
+                                    "Sam"  : 27,
+                                    "John" : 18]
+    let multiple = 10
     
     // MARK: - Subviews
     var outputLabel = UILabel()
@@ -175,31 +180,62 @@ class ViewController: UIViewController {
     
     @objc private func applyButtonTapped() {
         
-        appendInt(textField: oneTextField)
-        appendInt(textField: twoTextField)
-        appendInt(textField: threeTextField)
-        appendInt(textField: fourTextField)
+    
+       let newArray = arrayInt.sorted(by:<)
         
-        view?.endEditing(true)
+       oneTextField.text = newArray[0].description
+       twoTextField.text = newArray[1].description
+       threeTextField.text = newArray[2].description
+       fourTextField.text = newArray[3].description
         
-        //        arrayInt = [Int(oneTextField.text ?? "0") ?? 0, Int(twoTextField.text ?? "0") ?? 0, Int(threeTextField.text ?? "0") ?? 0, Int(fourTextField.text ?? "0") ?? 0]
-        //
+        self.view.backgroundColor = UIColor(hexString: "ffd700")
+
+//        appendInt(textField: oneTextField)
+//        appendInt(textField: twoTextField)
+//        appendInt(textField: threeTextField)
+//        appendInt(textField: fourTextField)
+//
+//        view?.endEditing(true)
+//
+//        //        arrayInt = [Int(oneTextField.text ?? "0") ?? 0, Int(twoTextField.text ?? "0") ?? 0, Int(threeTextField.text ?? "0") ?? 0, Int(fourTextField.text ?? "0") ?? 0]
+//        //
+
         
-        outputLabel.text = arrayInt.description
+ outputLabel.text = newArray.description
         
     }
     
     @objc private func removeButtonTapped() {
+//
+//        arrayInt = arrayInt.map { num in
+//            num * 7
+//        }
+//
+//        outputLabel.text = arrayInt.description
+//        clearFields()
+//        //print(arrayInt)
         
-        arrayInt = arrayInt.map { num in
-            num * 7
+        
+        for (key, value) in nameAges
+        {
+            
+            nameAges[key] = value * multiple
+            
+            arrayInt.append(nameAges[key] ?? 0)
         }
-       
-        outputLabel.text = arrayInt.description
-        clearFields()
-        //print(arrayInt)
         
-        //        let multiArray =
+        if arrayInt.count <= 0 {
+        
+        applyButton.isHidden = true
+        
+        } else {
+            applyButton.isHidden = false
+        }
+        
+        outputLabel.text = "\(arrayInt)"
+        print(arrayInt.description)
+        
+        
         
     }
     /* Задача 1
@@ -227,12 +263,7 @@ class ViewController: UIViewController {
      inputTextField.text = ""
      outputLabel.text = "\(arrayInt)"
      */
-    
-    
-    
 }
-
-
 
 /* Задача 5
  let element = Int(inputTextField.text ?? "0")
@@ -273,6 +304,7 @@ extension ViewController: UITextFieldDelegate {
     
     @objc func textChanged(_ textField: UITextField) {
         applyButton.isHidden = [oneTextField, twoTextField, threeTextField, fourTextField].contains { $0.text!.isEmpty }
+        
     }
     
     
