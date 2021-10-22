@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FirstViewController.swift
 //  SwiftLearning
 //
 //  Created by Григорий Зауличный on 15.07.21.
@@ -18,6 +18,8 @@ class ViewController: UIViewController {
                                     "Sam"  : 27,
                                     "John" : 18]
     let multiple = 10
+    var colorArray: [UIColor] = [.red, .systemYellow, .gray, .green, .blue]
+    
     
     // MARK: - Subviews
     var outputLabel = UILabel()
@@ -46,6 +48,7 @@ class ViewController: UIViewController {
         setup()
         self.view.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
     }
+
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -53,6 +56,19 @@ class ViewController: UIViewController {
     
     // MARK: -  Methods
     
+    func checkTextFields() -> Bool {
+        
+        if oneTextField.text == "1" &&
+            twoTextField.text == "2" &&
+            threeTextField.text == "3" &&
+            fourTextField.text == "4" {
+            
+            print("open new screen")
+            return true
+        } else {
+            return false
+        }
+    }
     
     func configureStackView() {
         stackView.axis = .vertical
@@ -180,28 +196,35 @@ class ViewController: UIViewController {
     
     @objc private func applyButtonTapped() {
         
-    
-       let newArray = arrayInt.sorted(by:<)
+        view?.endEditing(true)
         
-       oneTextField.text = newArray[0].description
-       twoTextField.text = newArray[1].description
-       threeTextField.text = newArray[2].description
-       fourTextField.text = newArray[3].description
-        
-        self.view.backgroundColor = UIColor(hexString: "ffd700")
+        if checkTextFields() {
+            self.navigationController?.pushViewController(SecondViewController.init(), animated: true)
 
-//        appendInt(textField: oneTextField)
-//        appendInt(textField: twoTextField)
-//        appendInt(textField: threeTextField)
-//        appendInt(textField: fourTextField)
+        } else {
+//            let newArray = arrayInt.sorted(by:<)
 //
-//        view?.endEditing(true)
-//
-//        //        arrayInt = [Int(oneTextField.text ?? "0") ?? 0, Int(twoTextField.text ?? "0") ?? 0, Int(threeTextField.text ?? "0") ?? 0, Int(fourTextField.text ?? "0") ?? 0]
-//        //
-
-        
- outputLabel.text = newArray.description
+//            oneTextField.text = newArray[0].description
+//            twoTextField.text = newArray[1].description
+//            threeTextField.text = newArray[2].description
+//            fourTextField.text = newArray[3].description
+            
+            self.view.backgroundColor = colorArray.randomElement()
+            outputLabel.backgroundColor = colorArray.randomElement()
+            //        appendInt(textField: oneTextField)
+            //        appendInt(textField: twoTextField)
+            //        appendInt(textField: threeTextField)
+            //        appendInt(textField: fourTextField)
+            //
+            //        view?.endEditing(true)
+            //
+            //        //        arrayInt = [Int(oneTextField.text ?? "0") ?? 0, Int(twoTextField.text ?? "0") ?? 0, Int(threeTextField.text ?? "0") ?? 0, Int(fourTextField.text ?? "0") ?? 0]
+            //        //
+            
+            
+          //  outputLabel.text = newArray.description
+            
+        }
         
     }
     
@@ -304,10 +327,10 @@ extension ViewController: UITextFieldDelegate {
     
     @objc func textChanged(_ textField: UITextField) {
         applyButton.isHidden = [oneTextField, twoTextField, threeTextField, fourTextField].contains { $0.text!.isEmpty }
-        
+//        checkTextFields()
     }
     
-    
+
 }
         
 
